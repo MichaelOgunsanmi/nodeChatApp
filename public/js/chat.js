@@ -40,7 +40,6 @@ const autoScroll = () => {
 };
 
  socket.on('message', (message) => {
-     console.log(message)
      const html = Mustache.render(messageTemplate, {
          username: message.username,
          message: message.text,
@@ -83,7 +82,7 @@ socket.on('roomData', ({room, users}) => {
 
          if (err) return console.log(err);
 
-         console.log('Message was delivered')
+         // console.log('Message was delivered')
      })
  });
 
@@ -95,7 +94,7 @@ socket.on('roomData', ({room, users}) => {
     navigator.geolocation.getCurrentPosition(position => {
         const {latitude, longitude} = position.coords;
         socket.emit('sendLocation', {latitude, longitude}, () => {
-            console.log('Location shared');
+            // console.log('Location shared');
             sendLocationButton.removeAttribute('disabled');
             sendLocationButton.focus();
         });
