@@ -18,7 +18,7 @@ const {addUser, removeUser, getUsersInRoom, getUser} = require('./utils/users');
 const pathToPubicDirectory = path.resolve(__dirname, 'public');
 
 app.use(express.static(pathToPubicDirectory));
-const nm_dependencies = ['mustache', 'moment', 'qs']; // keep adding required node_modules to this array.
+const nm_dependencies = ['mustache', 'moment', 'qs', "socket.io"]; // keep adding required node_modules to this array.
 nm_dependencies.forEach(dep => {
     app.use(`/${dep}`, express.static(path.resolve(`node_modules/${dep}`)));
 });
