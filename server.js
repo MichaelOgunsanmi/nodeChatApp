@@ -12,13 +12,19 @@ const PORT = process.env.PORT || config.get('PORT');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
 
 app.use(express.static(pathToPubicDirectory));
 const nm_dependencies = ['mustache', 'moment', 'qs']; // keep adding required node_modules to this array.
 nm_dependencies.forEach(dep => {
     app.use(`/${dep}`, express.static(path.resolve(`node_modules/${dep}`)));
 });
+
+server.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+});
+
+const io = socketio.listen(server);
+
 
 io.on('connection', (socket) => {
     console.log('New Websocket connection');
@@ -76,6 +82,3 @@ app.get('/', (req, res, next) => {
     res.send('Chat App')
 });
 
-server.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-});
