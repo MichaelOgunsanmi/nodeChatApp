@@ -8,13 +8,17 @@
     "start:dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["chat"],
+  "keywords": [
+    "chat"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bad-words": "^3.0.3",
     "config": "^3.2.5",
     "express": "^4.17.1",
     "moment": "^2.24.0",
-    "mustache": "^4.0.0"
+    "mustache": "^4.0.0",
+    "socket.io": "^2.3.0"
   }
 }
