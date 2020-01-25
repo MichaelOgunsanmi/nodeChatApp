@@ -11,7 +11,7 @@ const pathToPubicDirectory = path.resolve(__dirname, 'public');
 const PORT = process.env.PORT || config.get('PORT');
 
 const app = express();
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
 app.use(express.static(pathToPubicDirectory));
 const nm_dependencies = ['mustache', 'moment', 'qs']; // keep adding required node_modules to this array.
@@ -19,11 +19,11 @@ nm_dependencies.forEach(dep => {
     app.use(`/${dep}`, express.static(path.resolve(`node_modules/${dep}`)));
 });
 
-server.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
 
-const io = socketio.listen(server);
+const io = socketio(server);
 
 
 io.on('connection', (socket) => {
