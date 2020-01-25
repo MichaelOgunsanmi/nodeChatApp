@@ -1,9 +1,9 @@
 const path = require('path');
-const https = require('https');
+const http = require('http');
 
 const express = require('express');
 const app = express();
-const server = https.createServer(app);
+const server = http.createServer(app);
 
 const socketio = require('socket.io');
 const io = socketio(server);
@@ -73,6 +73,10 @@ io.on('connection', (socket) => {
             });
         }
         })
+});
+
+app.get('/', (req, res, next) => {
+    res.send('Chat App')
 });
 
 
