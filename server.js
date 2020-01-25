@@ -1,24 +1,21 @@
 const path = require('path');
 const http = require('http');
-
 const express = require('express');
-const app = express();
-const server = http.createServer(app);
-
 const socketio = require('socket.io');
-const io = socketio(server);
-
+const {generateMessage, generateLocationMessage} = require('./utils/messages');
+const {addUser, removeUser, getUsersInRoom, getUser} = require('./utils/users');
 const config = require('config');
 const Filter = require('bad-words');
 
-const {generateMessage, generateLocationMessage} = require('./utils/messages');
-const {addUser, removeUser, getUsersInRoom, getUser} = require('./utils/users');
-
-
 const pathToPubicDirectory = path.resolve(__dirname, 'public');
+const PORT = process.env.PORT || config.get('PORT');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 
 app.use(express.static(pathToPubicDirectory));
-const nm_dependencies = ['mustache', 'moment', 'qs', "socket.io"]; // keep adding required node_modules to this array.
+const nm_dependencies = ['mustache', 'moment', 'qs']; // keep adding required node_modules to this array.
 nm_dependencies.forEach(dep => {
     app.use(`/${dep}`, express.static(path.resolve(`node_modules/${dep}`)));
 });
@@ -78,9 +75,6 @@ io.on('connection', (socket) => {
 app.get('/', (req, res, next) => {
     res.send('Chat App')
 });
-
-
-const PORT = process.env.PORT || config.get('PORT');
 
 server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
